@@ -1,0 +1,109 @@
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #222;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+}
+
+.game {
+    background-color: transparent;
+    width: 80vh;
+    height: 80vh;
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    --ms-transform: translate(-50%, -50%);
+    --moz-transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.game canvas {
+    background-color: #bbb;
+    width: 100%;
+    height: 100%;
+}
+
+nav {
+    background-color: green;
+    height: 40px;
+    max-height: 8vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: relative;
+}
+
+nav div {
+    height: 100%
+}
+
+.navText, .navText a {
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    font-family: "Segoe UI", Verdana, sans-serif;
+}
+
+.navText {
+    padding: 0 0 0 8px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    --ms-transform: translateY(-50%);
+    --moz-transform: translateY(-50%);
+    display: inline-block;
+    cursor: pointer;
+}
+
+.navText:hover {
+    text-decoration: underline;
+}
+
+#dimBg {
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    opacity: 30%;
+    z-index: 4;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#optionsDiv {
+    border-radius: 25px;
+    background-color: #333;
+    height: 512px;
+    width: 512px;
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    --ms-transform: translate(-50%, -50%);
+    --moz-transform: translate(-50%, -50%);   
+    z-index: 6;
+}
+
+#closeOptions {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+#closeOptions:hover {
+    color: firebrick
+}
+
+#optionsTitle {
+    text-decoration: underline;
+    text-align: center;
+}
