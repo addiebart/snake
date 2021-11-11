@@ -1,3 +1,6 @@
+/* google fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap');
+
 html, body {
     margin: 0;
     width: 100%;
@@ -16,8 +19,8 @@ html, body {
     left: 50vw;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
-    --ms-transform: translate(-50%, -50%);
-    --moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
     z-index: 1;
 }
 
@@ -35,7 +38,6 @@ nav {
     top: 0;
     left: 0;
     right: 0;
-    position: relative;
 }
 
 nav div {
@@ -50,18 +52,18 @@ nav div {
 }
 
 .navText {
-    padding: 0 0 0 8px;
+    padding-left: 8px;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
-    --ms-transform: translateY(-50%);
-    --moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
     display: inline-block;
     cursor: pointer;
 }
 
-.navText:hover {
+.navText:hover, .navText:focus {
     text-decoration: underline;
 }
 
@@ -86,8 +88,8 @@ nav div {
     left: 50vw;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
-    --ms-transform: translate(-50%, -50%);
-    --moz-transform: translate(-50%, -50%);   
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);   
     z-index: 6;
 }
 
@@ -99,7 +101,7 @@ nav div {
     cursor: pointer;
 }
 
-#closeOptions:hover {
+#closeOptions:hover, #closeOptions:focus {
     color: firebrick
 }
 
@@ -107,3 +109,20 @@ nav div {
     text-decoration: underline;
     text-align: center;
 }
+
+.optionsRow {
+    margin: 16px 16px;
+    text-align: center;
+}
+
+.optionsRow > .optionsMenuBtn {
+    font-family: Montserrat, Roboto, Verdana, Tahoma, sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.optionsMenuBtn:hover, .optionsMenuBtn:focus {
+    text-shadow: 0 0 12px lightgoldenrodyellow;
+}
+
