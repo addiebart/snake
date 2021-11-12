@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "outDir": "./../prebundle/"
+    },
+    "files": [
+        "canvas.ts"
+    ]
+}
