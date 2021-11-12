@@ -8,8 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "build": "cd src && tsc && cd .. && browserify prebundle/canvas.js -o bundle.js",
-    "test": "echo this is a front-end JavaScript project. It does not run natively, so a test command is not appropriate. Use '$npm build' to compile."
+    "test": "cd src && tsc && cd .. && browserify prebundle/canvas.js -o bundle.js"
   },
   "repository": {
     "type": "git",
