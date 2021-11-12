@@ -1,0 +1,27 @@
+{
+  "name": "snake",
+  "version": "1.0.0",
+  "description": "A game of snake",
+  "main": "bundle.js",
+  "dependencies": {
+    "phaser": "^3.55.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "cd src && tsc && cd .. && browserify prebundle/canvas.js -o bundle.js",
+    "test": "echo this is a front-end JavaScript project. It does not run natively, so a test command is not appropriate. Use '$npm build' to compile."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edbart/snake.git"
+  },
+  "keywords": [
+    "snake"
+  ],
+  "author": "Eddie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edbart/snake/issues"
+  },
+  "homepage": "https://edbart.github.io/snake"
+}
