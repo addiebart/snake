@@ -14,12 +14,12 @@
     <nav>
         <div id="navBtnDiv">
             <span class="navText"><a href="/">Edbart</a></span>
-            <span class="navText" id="optionsBtn" title="Controls, Gameplay, Audio, oh my!">Options</span>
+            <span class="navText" id="optionsBtn" title="Controls, Gameplay, Audio, oh my!" tabindex="0">Options</span>
             <span class="navText"><a href="https://github.com/edbart/snake" target="_blank" title="View the source code on GitHub - @edbart">View Source</a></span>
         </div>
     </nav>
     <div class="game">
-        <canvas width="100" height="100" id="canvas">
+        <canvas id="canvas">
             <!-- game content here -->
         </canvas>
     </div>
@@ -27,11 +27,11 @@
     <div hidden id="optionsDiv">
         <!-- options screen --> 
         <h2 id="optionsTitle">Options</h2>
-        <div class="optionsRow" id="topOptRow"><span class="optionsMenuBtn">Keybinds<span></div>
-        <div class="optionsRow"><span class="optionsMenuBtn">Gamepads</span></div>
+        <div class="optionsRow" id="topOptRow"><span class="optionsMenuBtn" id="keybindsBtn" tabindex="0">Keybinds</span></div>
+        <div class="optionsRow"><span class="optionsMenuBtn" id="gamepadsBtn" tabindex="0">Gamepads</span></div>
         <div class="optionsRow"></div>
         <div class="optionsRow"></div>
-        <div id="closeOptions">&times;</div>
+        <div id="closeOptions" tabindex="0">&times;</div>
     </div>
 </body>
 </html>
