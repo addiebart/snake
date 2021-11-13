@@ -1,4 +1,6 @@
 'use strict';
+exports.__esModule = true;
+var Phaser = require("phaser");
 document.addEventListener('DOMContentLoaded', function () {
     // event handlers
     var optbtn = document.getElementById('optionsBtn'), dimbg = document.getElementById('dimBg'), optdiv = document.getElementById('optionsDiv'), optclose = document.getElementById('closeOptions');
@@ -17,12 +19,12 @@ document.addEventListener('DOMContentLoaded', function () {
         dimbg.hidden = true;
         optdiv.hidden = true;
     });
-    var Phaser = require('phaser');
+    // end event handlers
     var config = {
         type: Phaser.CANVAS,
         canvas: document.getElementById('canvas'),
-        width: 500,
-        height: 500,
+        width: 1600,
+        height: 1600,
         physics: {
             "default": 'arcade',
             arcade: {

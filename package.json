@@ -6,7 +6,9 @@
   "dependencies": {
     "phaser": "^3.55.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^16.11.7"
+  },
   "scripts": {
     "test": "cd src && tsc && cd .. && browserify prebundle/canvas.js -o bundle.js"
   },

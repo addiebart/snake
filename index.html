@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval'; block-all-mixed-content;">
+    <meta name="robots" content="noindex, nofollow"> <!-- temporary while in development -->
     <link rel="stylesheet" href="main.css">
     <link rel="shortcut icon" href="snekicon.png" type="image/png">
     <script src="bundle.js"></script>
@@ -14,24 +15,33 @@
     <nav>
         <div id="navBtnDiv">
             <span class="navText"><a href="/">Edbart</a></span>
+            <span class="navText" id="aboutBtn" title="About &quot;Snake&quot;" tabindex="0">About</span>
             <span class="navText" id="optionsBtn" title="Controls, Gameplay, Audio, oh my!" tabindex="0">Options</span>
             <span class="navText"><a href="https://github.com/edbart/snake" target="_blank" title="View the source code on GitHub - @edbart">View Source</a></span>
         </div>
+        <span id="devWarning">This project is unfinished.</span> <!-- temporary while in development -->
     </nav>
     <div class="game">
         <canvas id="canvas">
             <!-- game content here -->
         </canvas>
+        <noscript><h1>JavaScript is required to play.</h1></noscript>
     </div>
     <div hidden id="dimBg"></div>
     <div hidden id="optionsDiv">
         <!-- options screen --> 
-        <h2 id="optionsTitle">Options</h2>
+        <h1 id="optionsTitle">Options</h1>
         <div class="optionsRow" id="topOptRow"><span class="optionsMenuBtn" id="keybindsBtn" tabindex="0">Keybinds</span></div>
         <div class="optionsRow"><span class="optionsMenuBtn" id="gamepadsBtn" tabindex="0">Gamepads</span></div>
+        <div class="optionsRow">
+            <div class="sliderPositonDiv">
+                <div class="sliderMidLine"></div>
+                <input type="range" min="1" max="100" value="50" class="slider" id="sfxVolume"> 
+            </div>
+            <span id="sfxVolumeLbl" class="sliderLbl">SFX - <span class="sliderPct" id="sfxVolumePct">100%</span></span>
+        </div>
         <div class="optionsRow"></div>
-        <div class="optionsRow"></div>
-        <div id="closeOptions" tabindex="0">&times;</div>
+        <div id="closeOptions" tabindex="0" title="Close Menu">&times;</div>
     </div>
 </body>
 </html>

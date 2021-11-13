@@ -1,8 +1,24 @@
 {
     "compilerOptions": {
-        "outDir": "./../prebundle/"
+        "outDir": "../prebundle/",
+        "typeRoots": [
+            "../node_modules/phaser/types",
+            "../node_module/@types"
+        ],
+        "types": [
+            "phaser",
+            "node"
+        ],
+        "module": "CommonJS"
     },
     "files": [
         "canvas.ts"
-    ]
+    ],
+    "typeAcquisition": {
+        "include": [
+            "node",
+            "phaser"       
+        ],
+        "enable": true
+    }
 }

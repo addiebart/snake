@@ -1,4 +1,7 @@
 'use strict';
+
+import Phaser = require("phaser");
+
 document.addEventListener('DOMContentLoaded', () => {
 
 // event handlers
@@ -24,14 +27,13 @@ optclose.addEventListener('click', () => {
     dimbg.hidden = true;
     optdiv.hidden = true;
 });
-
-const Phaser = require('phaser');
+// end event handlers
 
 var config = {
     type: Phaser.CANVAS,
-    canvas: document.getElementById('canvas'),
-    width: 500,
-    height: 500,
+    canvas: document.getElementById('canvas') as HTMLCanvasElement,
+    width: 1600,
+    height: 1600,
     physics: {
         default: 'arcade',
         arcade: {

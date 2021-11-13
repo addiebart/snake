@@ -108,6 +108,7 @@ nav div {
 #optionsTitle {
     text-decoration: underline;
     text-align: center;
+    font-size: 24px;
 }
 
 .optionsRow {
@@ -120,9 +121,57 @@ nav div {
     font-size: 32px;
     font-weight: 600;
     cursor: pointer;
+    transition: text-shadow 0.1s;
 }
 
 .optionsMenuBtn:hover, .optionsMenuBtn:focus {
     text-shadow: 0 0 12px lightgoldenrodyellow;
 }
 
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 250px; /* Full-width */
+    max-width: 80%;
+    height: 10px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+
+  .slider:hover {
+      opacity: 1;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #04AA6D; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 25px;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #04AA6D; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 25px;
+  }
+  
+  #devWarning {
+    margin-right: 8px;
+    margin-top: 8px;
+    color: firebrick;
+    font-weight: bold;
+  }
+
+  noscript {
+      color: firebrick;
+  }
