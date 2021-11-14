@@ -1,6 +1,8 @@
+//! https://edbart.github.io/snake/, https://github.com/edbart/, Eddie Bart.
 'use strict';
 
 import Phaser = require("phaser");
+console.log(this);
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -50,8 +52,8 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
+    
     this.load.setBaseURL('https://labs.phaser.io');
-
     this.load.image('sky', 'assets/skies/space3.png');
     this.load.image('logo', 'assets/sprites/phaser3-logo.png');
     this.load.image('red', 'assets/particles/red.png');
@@ -60,6 +62,7 @@ function preload ()
 function create ()
 {
     this.add.image(400, 300, 'sky');
+    console.log('logging property "this"', this);
 
     var particles = this.add.particles('red');
 

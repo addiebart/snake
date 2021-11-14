@@ -6,7 +6,7 @@
             "../node_module/@types"
         ],
         "types": [
-            "phaser",
+            "Phaser",
             "node"
         ],
         "module": "CommonJS"

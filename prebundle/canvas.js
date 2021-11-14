@@ -1,6 +1,8 @@
+//! https://edbart.github.io/snake/, https://github.com/edbart/, Eddie Bart.
 'use strict';
 exports.__esModule = true;
 var Phaser = require("phaser");
+console.log(this);
 document.addEventListener('DOMContentLoaded', function () {
     // event handlers
     var optbtn = document.getElementById('optionsBtn'), dimbg = document.getElementById('dimBg'), optdiv = document.getElementById('optionsDiv'), optclose = document.getElementById('closeOptions');
@@ -45,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function create() {
         this.add.image(400, 300, 'sky');
+        console.log('logging property "this"', this);
         var particles = this.add.particles('red');
         var emitter = particles.createEmitter({
             speed: 100,
