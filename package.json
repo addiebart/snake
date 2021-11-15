@@ -10,7 +10,7 @@
     "@types/node": "^16.11.7"
   },
   "scripts": {
-    "test": "cd src && tsc && cd .. && browserify prebundle/canvas.js -o bundle.js"
+    "test": "cd src && tsc && cd .. && browserify prebundle/main.js -o bundle.js"
   },
   "repository": {
     "type": "git",

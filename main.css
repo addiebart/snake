@@ -1,6 +1,6 @@
 /* google fonts import */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap');
 html, body {
     margin: 0;
     width: 100%;
@@ -12,10 +12,10 @@ html, body {
 
 .game {
     background-color: transparent;
-    width: 80vh;
-    height: 80vh;
+    width: 80vmin;
+    height: 80vmin;
     position: fixed;
-    top: 50vh;
+    top: 50vmin;
     left: 50vw;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
@@ -33,11 +33,12 @@ html, body {
 nav {
     background-color: green;
     height: 40px;
-    max-height: 8vh;
+    max-height: 8vmin;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    z-index: 3;
 }
 
 nav div {
@@ -68,7 +69,7 @@ nav div {
 }
 
 #dimBg {
-    height: 100vh;
+    height: 100vmin;
     width: 100vw;
     background-color: black;
     opacity: 30%;
@@ -78,22 +79,22 @@ nav div {
     left: 0;
 }
 
-#optionsDiv {
+#optionsDiv, #aboutDiv {
     border-radius: 25px;
     background-color: #333;
     height: 512px;
     width: 512px;
     position: fixed;
-    top: 50vh;
+    top: 50vmin;
     left: 50vw;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);   
+    -moz-transform: translate(-50%, -50%);
     z-index: 6;
 }
 
-#closeOptions {
+.closePopup {
     position: absolute;
     top: 16px;
     right: 16px;
@@ -101,18 +102,18 @@ nav div {
     cursor: pointer;
 }
 
-#closeOptions:hover, #closeOptions:focus {
+.closePopup:hover, .closePopup:focus {
     color: firebrick
 }
 
-#optionsTitle {
+.popupMenuTitle {
     text-decoration: underline;
     text-align: center;
     font-size: 24px;
 }
 
 .optionsRow {
-    margin: 16px 16px;
+    margin: 16px;
     text-align: center;
 }
 
@@ -129,49 +130,163 @@ nav div {
 }
 
 .slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
+    -webkit-appearance: none;
+    /* Override default CSS styles */
     appearance: none;
-    width: 250px; /* Full-width */
+    width: 250px;
+    /* Full-width */
     max-width: 80%;
-    height: 10px; /* Specified height */
-    background: #d3d3d3; /* Grey background */
-    outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    height: 10px;
+    /* Specified height */
+    background: #d3d3d3;
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
+    opacity: 0.7;
+    /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s;
+    /* 0.2 seconds transition on hover */
     transition: opacity .2s;
     border-radius: 4px;
     margin: 12px 0;
-  }
+}
 
-  .slider:hover {
-      opacity: 1;
-  }
+.slider:hover {
+    opacity: 1;
+}
 
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
     appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #04AA6D;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
     border-radius: 25px;
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #04AA6D;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
     border-radius: 25px;
-  }
-  
-  #devWarning {
+}
+
+#devWarning {
     margin-right: 8px;
     margin-top: 8px;
     color: firebrick;
     font-weight: bold;
-  }
+}
 
-  noscript {
-      color: firebrick;
-  }
+noscript {
+    color: firebrick;
+}
+
+.i {
+    font-style: italic;
+}
+
+.b {
+    font-weight: bold;
+}
+
+.u {
+    text-decoration: underline;
+}
+
+h2 {
+    font-size: 18px;
+    text-align: center;
+}
+
+#aboutDiv a {
+    color: aqua;
+}
+
+#aboutDiv p {
+    text-align: center;
+}
+
+#explainingSnake {
+    width: 300px;
+    max-width: 90%;
+    margin: auto;
+    margin-bottom: 32px;
+}
+
+#credits {
+    position: absolute;
+    bottom: 16px;
+    width: 100%;
+}
+
+#mobileMsg {
+    display: none;
+}
+
+@media only screen and (max-height: 6in) and (max-width: 9in) and (hover: none) {
+    /* is mobile */
+    body > * {
+        display: none;
+    }
+
+    body > #mobileMsg {
+        position: fixed;
+        top: 50;
+        left: 50;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        color: firebrick;
+        display: block;
+    }
+}
+
+#contentCols {
+    display: flex;
+    flex-flow: row;
+    height: 100vmin;
+    width: 100%;
+}
+
+.sideCol {
+    flex: 1 1 auto;
+    height: 100%;
+    position: relative;
+}
+
+#middleCol {
+    flex: 0 0 80vmin;
+    height: 100%;
+}
+
+.snekicon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    height: 128px;
+    width: 128px;
+    max-height: 20vmin;
+    max-width: 20vmin;
+    image-rendering: pixelated;
+}
+
+#audioRow {
+    margin-top: 32px;
+}
