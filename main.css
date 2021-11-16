@@ -64,7 +64,7 @@ nav div {
     cursor: pointer;
 }
 
-.navText:hover, .navText:focus {
+.navText:hover, .navText:focus-visible {
     text-decoration: underline;
 }
 
@@ -102,7 +102,7 @@ nav div {
     cursor: pointer;
 }
 
-.closePopup:hover, .closePopup:focus {
+.closePopup:hover, .closePopup:focus-visible {
     color: firebrick
 }
 
@@ -125,7 +125,7 @@ nav div {
     transition: text-shadow 0.1s;
 }
 
-.optionsMenuBtn:hover, .optionsMenuBtn:focus {
+.optionsMenuBtn:hover, .optionsMenuBtn:focus-visible {
     text-shadow: 0 0 12px lightgoldenrodyellow;
 }
 

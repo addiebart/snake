@@ -3,29 +3,16 @@
 
 import Phaser = require('phaser');
 
+document.addEventListener('DOMContentLoaded', () => {
+
 const getCookie = (name: String) => {
     var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     if (match) return match[2];
 }
 
-let fileConfig = {
-    sfxVolume: Number(getCookie('snakeSfxVolume')) || 50,
-    sfxVolumeStr: getCookie('snakeSfxVolume') || '50',
-    usingGamepad: Number(getCookie('snakeUsingGamepad')) === 1 || false,
-    upButton: 'up',
-    downButton: 'down',
-    leftButton: 'left',
-    rightButton: 'right',
-    gameSpeed: 1, // 0, 1, 2, 3
-    gridSize: 1, // 0, 1, 2
-    darkmode: (() => { // true, false, undefined
-        const cookie = getCookie('snakeDarkMode');
-        switch (cookie) {case '0': return false; case '1': return true; default: return null;}
-    })(),
-    highScore: Number(getCookie('snakeHighScore')) || 0
+const setCookie = (key: String, value: String) => {
+    document.cookie = key+'='+value+';max-age=31536000'
 }
-
-document.addEventListener('DOMContentLoaded', () => {
 
 // event handlers
 const optbtn = document.getElementById('optionsBtn'),
@@ -72,18 +59,47 @@ closeBtns.forEach(btn => {
 // sfx volume 
 sfxInput.addEventListener('input', () => {
     sfxLbl.textContent = sfxInput.value;
-    document.cookie = 'snakeSfxVolume='+sfxInput.value+';max-age=31536000'; // read cookie later
+    setCookie('sfxVolume', sfxInput.value); // read cookie later
     fileConfig.sfxVolumeStr = sfxInput.value;
     fileConfig.sfxVolume = Number(sfxInput.value);
 });
 
 // end event handlers
 
-var config = {
+let fileConfig = {
+    sfxVolume: Number(getCookie('sfxVolume')) || 50,
+    sfxVolumeStr: getCookie('sfxVolume') || '50',
+    gamepad: {
+        flag: Number(getCookie('snakeUsingGamepad')) === 1 || false,
+        type: getCookie('gamepadType') || null
+    },
+    input: {
+        up: 'up',
+        down: 'down',
+        left: 'left',
+        right: 'right'
+    },
+    gameSpeed: Number(getCookie('gameSpeed')) || 2, // 1, 2, 3, 4
+    gridSize: Number(getCookie('gridSize')) || 2, // 1, 2, 3
+    darkmode: (() => { // true, false, undefined
+        const cookie = getCookie('snakeDarkMode');
+        switch (cookie) {case '0': return false; case '1': return true; default: return null;}
+    })(),
+    highScore: {
+        overall: Number(getCookie('snakeOvHs')) || 0
+    },
+    handle: () => {
+        sfxInput.value = fileConfig.sfxVolumeStr;
+        sfxLbl.textContent = fileConfig.sfxVolumeStr;
+    }
+}
+
+var phaserConfig: Phaser.Types.Core.GameConfig = {
     type: Phaser.CANVAS,
     canvas: document.getElementById('canvas') as HTMLCanvasElement,
     width: 1600,
     height: 1600,
+    pixelArt: true,
     physics: {
         default: 'arcade',
         arcade: {
@@ -96,34 +112,32 @@ var config = {
     }
 };
 
-var game = new Phaser.Game(config);
+fileConfig.handle();
+
+var game = new Phaser.Game(phaserConfig);
 
 function preload (this: Phaser.Scene) {
     
-    this.load.setBaseURL('https://labs.phaser.io');
-    this.load.image('sky', 'assets/skies/space3.png');
-    this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-    this.load.image('red', 'assets/particles/red.png');
+    this.load.setBaseURL(location.protocol+'//'+location.host+location.pathname+'/phaser/');
+    this.load.spritesheet('snake', 'snake.png', {
+        frameWidth: 16,
+        frameHeight: 16,
+        startFrame: 0,
+        endFrame: 23
+    });
 }
 
 function create (this: Phaser.Scene) {
-    this.add.image(400, 300, 'sky');
-
-    var particles = this.add.particles('red');
-
-    var emitter = particles.createEmitter({
-        speed: 100,
-        scale: { start: 1, end: 0 },
-        blendMode: 'ADD'
-    });
-
-    var logo = this.physics.add.image(400, 100, 'logo');
-
-    logo.setVelocity(100, 200);
-    logo.setBounce(1, 1);
-    logo.setCollideWorldBounds(true);
-
-    emitter.startFollow(logo);
+    this.add.image(0, 0, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
+    this.add.image(0, 160*1, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
+    this.add.image(0, 160*2, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
+    this.add.image(0, 160*3, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
+    this.add.image(0, 160*4, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
+    this.add.image(0, 160*5, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
+    this.add.image(0, 160*6, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
+    this.add.image(0, 160*7, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
+    this.add.image(0, 160*8, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
+    this.add.image(0, 160*9, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
 }
 
 }); /*ends domcontentloaded*/
