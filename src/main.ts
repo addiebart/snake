@@ -14,6 +14,12 @@ const setCookie = (key: String, value: String) => {
     document.cookie = key+'='+value+';max-age=31536000'
 }
 
+const randInt = (min: number, max: number) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 // event handlers
 const optbtn = document.getElementById('optionsBtn'),
 aboutBtn = document.getElementById('aboutBtn'),
@@ -88,6 +94,7 @@ let fileConfig = {
     highScore: {
         overall: Number(getCookie('snakeOvHs')) || 0
     },
+    stdTiles: Number(getCookie('stdTiles')) === 1 || false,
     handle: () => {
         sfxInput.value = fileConfig.sfxVolumeStr;
         sfxLbl.textContent = fileConfig.sfxVolumeStr;
@@ -123,21 +130,18 @@ function preload (this: Phaser.Scene) {
         frameWidth: 16,
         frameHeight: 16,
         startFrame: 0,
-        endFrame: 23
+        endFrame: 24
     });
 }
 
 function create (this: Phaser.Scene) {
-    this.add.image(0, 0, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
-    this.add.image(0, 160*1, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
-    this.add.image(0, 160*2, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
-    this.add.image(0, 160*3, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
-    this.add.image(0, 160*4, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
-    this.add.image(0, 160*5, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
-    this.add.image(0, 160*6, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
-    this.add.image(0, 160*7, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
-    this.add.image(0, 160*8, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
-    this.add.image(0, 160*9, 'snake', 16).setOrigin(0, 0).setScale(10, 10);
+    for (let x = 0; x < 10; x++) {
+        for (let y = 0; y < 10; y++) {
+            let i = this.add.image(160*x, 160*y, 'snake', (() => {
+                if (fileConfig.stdTiles) {return 15;} else {return randInt(14, 19);}
+            })()).setOrigin(0, 0).setScale(10, 10);
+        }
+    }
 }
 
-}); /*ends domcontentloaded*/
+}); // ends DOMContentLoaded
