@@ -7,10 +7,11 @@
     "phaser": "^3.55.2"
   },
   "devDependencies": {
-    "@types/node": "^16.11.7"
+    "@types/node": "^16.11.7",
+    "uglify-js": "^3.14.3"
   },
   "scripts": {
-    "test": "cd src && tsc && cd .. && browserify prebundle/main.js -o bundle.js"
+    "test": "cd src && tsc && cd .. && browserify prebundle/main.js -o bundle.temp.js && uglifyjs bundle.temp.js --output bundle.js && del bundle.temp.js"
   },
   "repository": {
     "type": "git",
