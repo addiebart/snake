@@ -14,12 +14,6 @@ const setCookie = (key: String, value: String) => {
     document.cookie = key+'='+value+';max-age=31536000'
 }
 
-const randInt = (min: number, max: number) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 // event handlers
 const optbtn = document.getElementById('optionsBtn'),
 aboutBtn = document.getElementById('aboutBtn'),
@@ -66,17 +60,22 @@ closeBtns.forEach(btn => {
 sfxInput.addEventListener('input', () => {
     sfxLbl.textContent = sfxInput.value;
     setCookie('sfxVolume', sfxInput.value); // read cookie later
-    fileConfig.sfxVolumeStr = sfxInput.value;
-    fileConfig.sfxVolume = Number(sfxInput.value);
+    game.sfxVolumeStr = sfxInput.value;
+    game.sfxVolume = Number(sfxInput.value);
 });
 
 // end event handlers
 
-let fileConfig = {
+interface Coord {
+    x: number,
+    y: number
+}
+
+var game = {
     sfxVolume: Number(getCookie('sfxVolume')) || 50,
     sfxVolumeStr: getCookie('sfxVolume') || '50',
     gamepad: {
-        flag: Number(getCookie('snakeUsingGamepad')) === 1 || false,
+        flag: Number(getCookie('gamepadFlag')) === 1 || false, //change from cookie to autodetect presence of controller with GameControllerAPI
         type: getCookie('gamepadType') || null
     },
     input: {
@@ -95,9 +94,21 @@ let fileConfig = {
         overall: Number(getCookie('snakeOvHs')) || 0
     },
     stdTiles: Number(getCookie('stdTiles')) === 1 || false,
+    getPoint: (x?: integer, y?: integer): Coord => {
+        var out: Coord = {x: null, y: null};
+        out.x = ((phaserConfig.width as number)/10)*(x);
+        out.y = ((phaserConfig.height as number)/10)*(y);
+        return out;
+    },
+    obj: {
+        bgTiles: {},
+        layers: {
+            bg: null as Phaser.GameObjects.Layer
+        }
+    },
     handle: () => {
-        sfxInput.value = fileConfig.sfxVolumeStr;
-        sfxLbl.textContent = fileConfig.sfxVolumeStr;
+        sfxInput.value = game.sfxVolumeStr;
+        sfxLbl.textContent = game.sfxVolumeStr;
     }
 }
 
@@ -119,29 +130,67 @@ var phaserConfig: Phaser.Types.Core.GameConfig = {
     }
 };
 
-fileConfig.handle();
+game.handle();
 
-var game = new Phaser.Game(phaserConfig);
+var phaserGame = new Phaser.Game(phaserConfig);
 
 function preload (this: Phaser.Scene) {
     
     this.load.setBaseURL(location.protocol+'//'+location.host+location.pathname+'/phaser/');
-    this.load.spritesheet('snake', 'snake.png', {
+    this.load.spritesheet('snake', '16x16.png', {
         frameWidth: 16,
         frameHeight: 16,
         startFrame: 0,
         endFrame: 24
     });
+    this.load.spritesheet('playBtn', '32x16.png', {
+        frameWidth: 32,
+        frameHeight: 16,
+        startFrame: 0,
+        endFrame: 9
+    });
 }
 
 function create (this: Phaser.Scene) {
-    for (let x = 0; x < 10; x++) {
-        for (let y = 0; y < 10; y++) {
-            let i = this.add.image(160*x, 160*y, 'snake', (() => {
-                if (fileConfig.stdTiles) {return 15;} else {return randInt(14, 19);}
+
+    for (var x = 0; x < 10; x++) {
+        for (var y = 0; y < 10; y++) {
+            game.obj.bgTiles['t'+x.toString()+'_'+y.toString()] = this.add.sprite(game.getPoint(x,y).x, game.getPoint(x,y).y, 'snake', (() => { // tile (0, 0) stored as game.bgTiles.t0_0
+                if (game.stdTiles) {return 15;} else {return Phaser.Math.Between(14, 19);}
             })()).setOrigin(0, 0).setScale(10, 10);
+            game.obj.bgTiles['t'+x.toString()+'_'+y.toString()].setDepth(-1);
         }
+    }
+
+    this.anims.create({
+        key: 'blaze',
+        frameRate: 8,
+        frames: this.anims.generateFrameNumbers('playBtn', { start: 0, end: 5 }),
+        repeat: -1
+    });
+
+    var start = this.add.sprite(game.getPoint(3,6).x, game.getPoint(3,6).y, 'playBtn', 0).setOrigin(0, 0).setScale(20, 20).setInteractive();
+    start.setDepth(1);
+    start.on('pointerover', () => {start.play('blaze');}).on('pointerout', () => {start.stop();});
+
+    var startLbl = this.add.sprite(game.getPoint(4,8).x, game.getPoint(4,8).y, 'playBtn', (() => {
+        switch (game.gamepad.type) {
+            case 'xinput': return 8;
+            case 'standard': return 9;
+            default: return 6;
+        }
+    })()).setOrigin(0, 0).setScale(10, 10);
+    startLbl.setDepth(1);
+    if (!game.gamepad.flag) {
+        this.anims.create({
+            key: 'startBlink',
+            frameRate: 4,
+            frames: this.anims.generateFrameNumbers('playBtn', { start: 6, end: 7 }),
+            repeat: -1
+        });
+        startLbl.play('startBlink');
     }
 }
 
+global.$__game = game;
 }); // ends DOMContentLoaded
