@@ -1,4 +1,4 @@
-//! main.ts | https://edbart.github.io/snake/, https://github.com/edbart/ | Eddie Bart.
+//! main.ts for gh:edbart/snake | https://edbart.github.io/snake/, https://github.com/edbart/ | (c) 2020 edbart.
 'use strict';
 
 import Phaser = require('phaser');
@@ -126,7 +126,8 @@ var phaserConfig: Phaser.Types.Core.GameConfig = {
     },
     scene: {
         preload: preload,
-        create: create
+        create: create,
+        update: update
     }
 };
 
@@ -190,6 +191,23 @@ function create (this: Phaser.Scene) {
         });
         startLbl.play('startBlink');
     }
+
+    function startBtn() {
+        start.destroy();
+        startLbl.destroy();
+        gameProcess();
+    }
+
+    start.on('click', startBtn);
+    // controller.addListener()
+
+    function gameProcess() {
+
+    }
+}
+
+function update() {
+    
 }
 
 global.$__game = game;
