@@ -74,6 +74,7 @@ interface Coord {
 var game = {
     sfxVolume: Number(getCookie('sfxVolume')) || 50,
     sfxVolumeStr: getCookie('sfxVolume') || '50',
+    snake: [] as Phaser.GameObjects.Sprite[],
     gamepad: {
         flag: Number(getCookie('gamepadFlag')) === 1 || false, //change from cookie to autodetect presence of controller with GameControllerAPI
         type: getCookie('gamepadType') || null
@@ -94,18 +95,13 @@ var game = {
         overall: Number(getCookie('snakeOvHs')) || 0
     },
     stdTiles: Number(getCookie('stdTiles')) === 1 || false,
-    getPoint: (x?: integer, y?: integer): Coord => {
-        var out: Coord = {x: null, y: null};
-        out.x = ((phaserConfig.width as number)/10)*(x);
-        out.y = ((phaserConfig.height as number)/10)*(y);
-        return out;
-    },
     obj: {
         bgTiles: {},
         layers: {
             bg: null as Phaser.GameObjects.Layer
         }
     },
+    updateCycle: 0,
     handle: () => {
         sfxInput.value = game.sfxVolumeStr;
         sfxLbl.textContent = game.sfxVolumeStr;
@@ -142,7 +138,7 @@ function preload (this: Phaser.Scene) {
         frameWidth: 16,
         frameHeight: 16,
         startFrame: 0,
-        endFrame: 24
+        endFrame: 13
     });
     this.load.spritesheet('playBtn', '32x16.png', {
         frameWidth: 32,
@@ -156,8 +152,8 @@ function create (this: Phaser.Scene) {
 
     for (var x = 0; x < 10; x++) {
         for (var y = 0; y < 10; y++) {
-            game.obj.bgTiles['t'+x.toString()+'_'+y.toString()] = this.add.sprite(game.getPoint(x,y).x, game.getPoint(x,y).y, 'snake', (() => { // tile (0, 0) stored as game.bgTiles.t0_0
-                if (game.stdTiles) {return 15;} else {return Phaser.Math.Between(14, 19);}
+            game.obj.bgTiles['t'+x.toString()+'_'+y.toString()] = this.add.sprite(x*160, y*160, 'snake', (() => { // tile (0, 0) stored as game.bgTiles.t0_0
+                if (game.stdTiles) {return 15;} else {return Phaser.Math.Between(4, 9);}
             })()).setOrigin(0, 0).setScale(10, 10);
             game.obj.bgTiles['t'+x.toString()+'_'+y.toString()].setDepth(-1);
         }
@@ -170,11 +166,11 @@ function create (this: Phaser.Scene) {
         repeat: -1
     });
 
-    var start = this.add.sprite(game.getPoint(3,6).x, game.getPoint(3,6).y, 'playBtn', 0).setOrigin(0, 0).setScale(20, 20).setInteractive();
+    var start = this.add.sprite(3*160, 6*160, 'playBtn', 0).setOrigin(0, 0).setScale(20, 20).setInteractive();
     start.setDepth(1);
     start.on('pointerover', () => {start.play('blaze');}).on('pointerout', () => {start.stop();});
 
-    var startLbl = this.add.sprite(game.getPoint(4,8).x, game.getPoint(4,8).y, 'playBtn', (() => {
+    var startLbl = this.add.sprite(4*160, 8*160, 'playBtn', (() => {
         switch (game.gamepad.type) {
             case 'xinput': return 8;
             case 'standard': return 9;
@@ -198,16 +194,31 @@ function create (this: Phaser.Scene) {
         gameProcess();
     }
 
-    start.on('click', startBtn);
+    start.on('pointerup', startBtn);
     // controller.addListener()
 
-    function gameProcess() {
-
+    var gameProcess = () => {
+        var head = this.add.sprite(4*160, 3*160, 'snake', 0);
+        var body = this.add.sprite(4*160, 4*160, 'snake', 1);
+        var tail = this.add.sprite(4*160, 5*160, 'snake', 3);
+        var snake = game.snake;
+        snake.splice(0, 0, head, body, tail);
+        snake.forEach(it => it.setDepth(10).setOrigin(0, 0).setScale(10, 10))
     }
 }
 
 function update() {
-    
+    var snake = game.snake;
+    if (game.updateCycle%10 === 2) {
+        snake.forEach(it => {
+            var step1 = (((it.y/160)-1)*160); // -1 for 0
+            var step2: number;
+            if (step1 < 0) {step2 = 9*160}
+            else {step2 = step1}
+            it.y = step2;
+        });
+    }
+    game.updateCycle++;
 }
 
 global.$__game = game;

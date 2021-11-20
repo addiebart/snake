@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var game = {
         sfxVolume: Number(getCookie('sfxVolume')) || 50,
         sfxVolumeStr: getCookie('sfxVolume') || '50',
+        snake: [],
         gamepad: {
             flag: Number(getCookie('gamepadFlag')) === 1 || false,
             type: getCookie('gamepadType') || null
@@ -75,18 +76,13 @@ document.addEventListener('DOMContentLoaded', function () {
             overall: Number(getCookie('snakeOvHs')) || 0
         },
         stdTiles: Number(getCookie('stdTiles')) === 1 || false,
-        getPoint: function (x, y) {
-            var out = { x: null, y: null };
-            out.x = (phaserConfig.width / 10) * (x);
-            out.y = (phaserConfig.height / 10) * (y);
-            return out;
-        },
         obj: {
             bgTiles: {},
             layers: {
                 bg: null
             }
         },
+        updateCycle: 0,
         handle: function () {
             sfxInput.value = game.sfxVolumeStr;
             sfxLbl.textContent = game.sfxVolumeStr;
@@ -118,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
             frameWidth: 16,
             frameHeight: 16,
             startFrame: 0,
-            endFrame: 24
+            endFrame: 13
         });
         this.load.spritesheet('playBtn', '32x16.png', {
             frameWidth: 32,
@@ -128,14 +124,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
     function create() {
+        var _this = this;
         for (var x = 0; x < 10; x++) {
             for (var y = 0; y < 10; y++) {
-                game.obj.bgTiles['t' + x.toString() + '_' + y.toString()] = this.add.sprite(game.getPoint(x, y).x, game.getPoint(x, y).y, 'snake', (function () {
+                game.obj.bgTiles['t' + x.toString() + '_' + y.toString()] = this.add.sprite(x * 160, y * 160, 'snake', (function () {
                     if (game.stdTiles) {
                         return 15;
                     }
                     else {
-                        return Phaser.Math.Between(14, 19);
+                        return Phaser.Math.Between(4, 9);
                     }
                 })()).setOrigin(0, 0).setScale(10, 10);
                 game.obj.bgTiles['t' + x.toString() + '_' + y.toString()].setDepth(-1);
@@ -147,10 +144,10 @@ document.addEventListener('DOMContentLoaded', function () {
             frames: this.anims.generateFrameNumbers('playBtn', { start: 0, end: 5 }),
             repeat: -1
         });
-        var start = this.add.sprite(game.getPoint(3, 6).x, game.getPoint(3, 6).y, 'playBtn', 0).setOrigin(0, 0).setScale(20, 20).setInteractive();
+        var start = this.add.sprite(3 * 160, 6 * 160, 'playBtn', 0).setOrigin(0, 0).setScale(20, 20).setInteractive();
         start.setDepth(1);
         start.on('pointerover', function () { start.play('blaze'); }).on('pointerout', function () { start.stop(); });
-        var startLbl = this.add.sprite(game.getPoint(4, 8).x, game.getPoint(4, 8).y, 'playBtn', (function () {
+        var startLbl = this.add.sprite(4 * 160, 8 * 160, 'playBtn', (function () {
             switch (game.gamepad.type) {
                 case 'xinput': return 8;
                 case 'standard': return 9;
@@ -172,12 +169,33 @@ document.addEventListener('DOMContentLoaded', function () {
             startLbl.destroy();
             gameProcess();
         }
-        start.on('click', startBtn);
+        start.on('pointerup', startBtn);
         // controller.addListener()
-        function gameProcess() {
-        }
+        var gameProcess = function () {
+            var head = _this.add.sprite(4 * 160, 3 * 160, 'snake', 0);
+            var body = _this.add.sprite(4 * 160, 4 * 160, 'snake', 1);
+            var tail = _this.add.sprite(4 * 160, 5 * 160, 'snake', 3);
+            var snake = game.snake;
+            snake.splice(0, 0, head, body, tail);
+            snake.forEach(function (it) { return it.setDepth(10).setOrigin(0, 0).setScale(10, 10); });
+        };
     }
     function update() {
+        var snake = game.snake;
+        if (game.updateCycle % 10 === 2) {
+            snake.forEach(function (it) {
+                var step1 = (((it.y / 160) - 1) * 160); // -1 for 0
+                var step2;
+                if (step1 < 0) {
+                    step2 = 9 * 160;
+                }
+                else {
+                    step2 = step1;
+                }
+                it.y = step2;
+            });
+        }
+        game.updateCycle++;
     }
     global.$__game = game;
 }); // ends DOMContentLoaded
