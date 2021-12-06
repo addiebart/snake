@@ -1,4 +1,4 @@
-//! main.ts for gh:edbart/snake | https://edbart.github.io/snake/, https://github.com/edbart/ | (c) 2020 edbart.
+//! main.ts for gh:addiebart/snake | https://addiebart.github.io/snake/, https://github.com/addiebart/ | (c) 2020 addiebart.
 'use strict';
 
 import Phaser = require('phaser');
@@ -203,7 +203,7 @@ function create (this: Phaser.Scene) {
         var tail = this.add.sprite(4*160, 5*160, 'snake', 3);
         var snake = game.snake;
         snake.splice(0, 0, head, body, tail);
-        snake.forEach(it => it.setDepth(10).setOrigin(0, 0).setScale(10, 10))
+        snake.forEach(it => it.setDepth(10).setOrigin(0, 0).setScale(10, 10));
     }
 }
 
@@ -213,8 +213,8 @@ function update() {
         snake.forEach(it => {
             var step1 = (((it.y/160)-1)*160); // -1 for 0
             var step2: number;
-            if (step1 < 0) {step2 = 9*160}
-            else {step2 = step1}
+            if (step1 < 0) step2 = 9*160;
+            else step2 = step1;
             it.y = step2;
         });
     }
